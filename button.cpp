@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
   }
   else
   {
-    while (button.get_value() == 0)
+    // button.f_pushed = [&]() { pushed(); };
+    while (button.get_state() == 0)
     {
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
