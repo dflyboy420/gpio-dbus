@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   DBusMessage *dbus_reply = nullptr;
   const char *dbus_result = nullptr;
 
-  DigitalIn button(15);
+  GPIO::PushButton button(15);
 
   // Initialize D-Bus error
   ::dbus_error_init(&dbus_error);
@@ -35,11 +35,9 @@ int main(int argc, char *argv[])
   }
   else
   {
-    chrono::steady_clock::time_point start = chrono::steady_clock::now();
-    std::chrono::milliseconds running;
-    while (button.get_state() < 1)
+    while (button.get_value() == 0)
     {
-      std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
     if (nullptr ==
