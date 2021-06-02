@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   DBusMessage *dbus_reply = nullptr;
   const char *dbus_result = nullptr;
 
-  GPIO::PushButton button(15);
+  GPIO::PushButton button(15, GPIO_PULL::UP);
 
   // Initialize D-Bus error
   ::dbus_error_init(&dbus_error);
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
   else
   {
     // button.f_pushed = [&]() { pushed(); };
-    while (button.get_state() == 0)
+    while (button.read() == 0)
     {
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
